@@ -42,7 +42,9 @@ module Refile
     # @see http://docs.aws.amazon.com/AWSRubySDK/latest/AWS/S3.html
     def initialize(region:, bucket:, max_size: nil, prefix: nil, hasher: Refile::RandomHasher.new, **s3_options)
       @s3_options = { region: region }.merge s3_options
-      @s3 = Aws::S3::Resource.new @s3_options
+
+      Aws::S3::Client.new(use_accelerate_endpoint: true, options: @s3_options)
+      @s3 = Aws::S3::Resource.new(client:client)
       credentials = @s3.client.config.credentials
       raise S3CredentialsError unless credentials
       @access_key_id = credentials.access_key_id
