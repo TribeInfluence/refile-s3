@@ -42,8 +42,7 @@ module Refile
     # @see http://docs.aws.amazon.com/AWSRubySDK/latest/AWS/S3.html
     def initialize(region:, bucket:, max_size: nil, prefix: nil, hasher: Refile::RandomHasher.new, **s3_options)
       @s3_options = { region: region }.merge s3_options
-
-      client = Aws::S3::Client.new(use_accelerate_endpoint: true, options: @s3_options)
+      client = Aws::S3::Client.new( use_accelerate_endpoint: true)
       @s3 = Aws::S3::Resource.new(client:client)
       credentials = @s3.client.config.credentials
       raise S3CredentialsError unless credentials
@@ -52,7 +51,7 @@ module Refile
       @bucket = @s3.bucket @bucket_name
       @hasher = hasher
       @prefix = prefix
-      @max_size = max_size
+      @max_size = max_siz
     end
 
     # Upload a file into this backend
