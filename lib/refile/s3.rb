@@ -51,7 +51,7 @@ module Refile
       @bucket = @s3.bucket @bucket_name
       @hasher = hasher
       @prefix = prefix
-      @max_size = max_siz
+      @max_size = max_size
     end
 
     # Upload a file into this backend
